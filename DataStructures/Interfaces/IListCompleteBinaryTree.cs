@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheoSoft.DataStructures
 {
-    public interface IListBinaryTree<T>
+    public interface IListCompleteBinaryTree<T>
     {
         void Add(T element);
 
@@ -13,5 +13,11 @@ namespace TheoSoft.DataStructures
         List<T> BreadthFirstTraversal();
 
         List<T> InOrderTraversal();
+
+        List<T> ReverseInOrderTraversal();
+
+        List<T> PreOrderTraversal();
+
+        List<T> ReversePreOrderTraversal();
     }
 }

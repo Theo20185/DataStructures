@@ -4,13 +4,13 @@ using System.Text;
 
 namespace TheoSoft.DataStructures
 {
-    public class ListBinaryTree<T> : IListBinaryTree<T>
+    public class ListCompleteBinaryTree<T> : IListCompleteBinaryTree<T>
     {
         private List<T> _list;
 
         public int Count {  get { return _list.Count; } }
 
-        public ListBinaryTree()
+        public ListCompleteBinaryTree()
         {
             _list = new List<T>();
         }
@@ -58,6 +58,88 @@ namespace TheoSoft.DataStructures
                     result.Add(_list[index]);
 
                     index = GetRightChildIndex(index);
+                }
+            }
+
+            return result;
+        }
+
+        public List<T> ReverseInOrderTraversal()
+        {
+            //Right, Current, Left
+            var result = new List<T>();
+
+            if (_list.Count > 0)
+            {
+                var index = 0;
+                var stack = new Stack<int>();
+
+                while (index != -1 || stack.Count > 0)
+                {
+                    while (index != -1)
+                    {
+                        stack.Push(index);
+                        index = GetRightChildIndex(index);
+                    }
+
+                    index = stack.Pop();
+                    result.Add(_list[index]);
+
+                    index = GetLeftChildIndex(index);
+                }
+            }
+
+            return result;
+        }
+
+        public List<T> PreOrderTraversal()
+        {
+            //Current, Left, Right
+            var result = new List<T>();
+
+            if (_list.Count > 0)
+            {
+                var stack = new Stack<int>();
+                stack.Push(0);
+                int index;
+
+                while(stack.Count > 0)
+                {
+                    index = stack.Pop();
+                    result.Add(_list[index]);
+
+                    if (HasRightChild(index))
+                        stack.Push(GetRightChildIndex(index));
+
+                    if (HasLeftChild(index))
+                        stack.Push(GetLeftChildIndex(index));
+                }
+            }
+
+            return result;
+        }
+
+        public List<T> ReversePreOrderTraversal()
+        {
+            //Current, Right, Left
+            var result = new List<T>();
+
+            if (_list.Count > 0)
+            {
+                var stack = new Stack<int>();
+                stack.Push(0);
+                int index;
+
+                while (stack.Count > 0)
+                {
+                    index = stack.Pop();
+                    result.Add(_list[index]);
+
+                    if (HasLeftChild(index))
+                        stack.Push(GetLeftChildIndex(index));
+
+                    if (HasRightChild(index))
+                        stack.Push(GetRightChildIndex(index));
                 }
             }
 
